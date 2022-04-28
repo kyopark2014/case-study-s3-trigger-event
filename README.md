@@ -82,7 +82,7 @@ EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해
 2) [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 이 방법은 기존 step functions을 glue를 통해 해결하여야 합니다. 
 
 
-3) 비정상 케이스에도 message 전송을 보장하기 위한 구조
+3) Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 한다면 아래와 같은 구조도 가능합니다. 
 
 장애등의 어떤 비정상 상황에서 SQS에 저장된 message가 삭제되어 버린 경우에도 정상적으로 데이터를 처리하고자 한다면 아래와 같이 DynamoDB와 같은 데이터베이스를 사용하여 모든 event를 logging 한 후, 순차적으로 처리하는 방법으로 접근 할 수 있을것으로 보입니다. 아래 그림에서는 S3의 object 생성 trigger 발생시 Lambda(S3)가 SQS에 event message를 push 하면서, DynamoDB에도 같은 이벤트를 push 합니다. 이때, 중복방지를 위해 UUID같은 event에 대한 unique한 ID를 생성하여 사용할 수 있습니다. SQS에 저장된 messages들은 순차적으로 Lambda(schedular)에 의해서 처리 되는데, SQS의 메시지를 삭제할때 마찬가지로 DynamoDB의 event message도 삭제합니다. (UUID 이용) 
 
