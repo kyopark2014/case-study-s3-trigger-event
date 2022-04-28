@@ -13,7 +13,7 @@
 
 ## Preblem Description 
 
-아래 그림과 같이 다수의 디바이스들이 Amazon S3에 디바이스의 state와 같은 data를 json 파일 형태 업로드 후, AWS Step Functions으로 처리하는 케이스가 있습니다. Amazon S3에 object가 생성되어 발생하는 event를 Lambda가 받아서 Amazon Step Functions에서 처리하게 됩니다. 
+아래 그림과 같이 다수의 디바이스들이 Amazon S3에 디바이스의 status와 같은 event를 json 파일 형태로 업로드 하면, Lambda가 S3에 저장되는 신규 생성 event를 trigger로 받아서, SQS에 event를 message로 쌓아놓습니다. 이후 AWS Step Functions가 받아서 처리하는 케이스입니다. 
 
 ![image](https://user-images.githubusercontent.com/52392004/165829694-57037577-13db-4ef5-8805-dcdfbbc39f13.png)
 
