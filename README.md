@@ -21,10 +21,17 @@
 
 - AWS Step Functions에서 1개의 event를 처리 할 때 1초라고 가정합니다. S3에 저장되는 데이터가 1초보다 천천히 들어온다면, Amazon SQS에 event가 쌓이지 않고 잘 처리가 됩니다.
 
-- Amazon S3에 저장되는 데이터가 일시적으로 1초에 1개보다 더 많이 들어오더라도, SQS에 message는 제한없이 저장됩니다. 그러나, Step Functions로 Standard 메시지가 120,000개, FㅑFO는 20,000개의 메시지가 전달되었는데, SQS의 메시지를 삭제하지 못하면 에러가 나면서 더이상 SQS에 메시지를 저장하지 못하게 되고, 이런 상태에서 새로운 event가 S3로부터 trigger되면 event가 유실될 수 있습니다.  
+- Amazon S3에 저장되는 파일이 일시적으로 1초에 1개보다 더 많이 들어오더라도, SQS가 Step Functions에 전달한 이벤트를 Concurrent하게 처리하면, 역시 event가 쌓이지 않고 잘 처리가 됩니다.
+
+- 하지만, Step Functions에서 Concurrent하게 처리 할 수 있는 용량보다 훨씬 더 많은 event가 전달되면, SQS의 메시지가 전달은 되었으나 삭제는 되지 않은 inflight 상태인 메시지가 늘어날 수 있습니다. 
+ 
+ - 그리고, 이런한 [inflight 메시지가 Standard 일때 120,000개, FㅑFO일때는 20,000개가 넘으면, SQS가 SQSOverLimit error를 발생](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-queues.html)시켜, 새로운 메시지를 저장하지 못하게 되므로, 이런 상태에서 새로운 event가 계속 S3로부터 trigger되어 들어오면 유실 될 수 있을 것으로 보입니다. 
+ 
+## 해결 방안
+
+- [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달이 안되도록 한다면 ?
 
 
 
-
-[Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
+- [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
 
