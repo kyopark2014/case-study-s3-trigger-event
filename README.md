@@ -31,7 +31,7 @@
 
 1) [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달되는 event를 제한하거나 스케줄링 할 수 있다면 문제 해결이 가능할 것으로 보여집니다. 
 
-여기서는 SQS의 신규 메시지 event를 Lambda가 받아서 처리하지 않고, Event Bridge가 주기적으로 생성한 cron job 형태의 event로 Lambda를 Trigger하여, SQS에 있는 메시지를 읽어가는 구조입니다. S3에 새로 Object 생성되더라도, Step Functions가 바로 trigger 되지 않고, 정해진 스케줄에 따라 원하는 만큼만 event를 처리할 수 있습니다. 
+여기서는 SQS의 신규 메시지 event를 Lambda가 받아서 처리하지 않고, Event Bridge가 주기적으로 생성한 cron job 형태의 event로 Lambda를 Trigger하여, SQS에 있는 메시지를 읽어가는 구조입니다. S3에 새로 Object 생성되더라도, Step Functions이 바로 trigger 되지 않고, 정해진 스케줄에 따라 원하는 만큼만 event를 처리할 수 있습니다. 
 
 ![image](https://user-images.githubusercontent.com/52392004/165829888-ecfa4246-f080-49e1-af9f-7c5495446173.png)
 
