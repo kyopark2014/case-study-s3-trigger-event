@@ -25,7 +25,7 @@
 
 - 하지만, Step Functions에서 Concurrent하게 처리 할 수 있는 용량보다 훨씬 더 많은 event가 전달되면, SQS의 메시지가 전달은 되었으나 삭제는 되지 않은 inflight 상태인 메시지가 늘어날 수 있습니다. 
  
- - 그리고, 이런한 [inflight 메시지가 Standard 일때 120,000개, FㅑFO일때는 20,000개가 넘으면, SQS가 SQSOverLimit error를 발생](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-queues.html)시켜, 새로운 메시지를 저장하지 못하게 되므로, 이런 상태에서 새로운 event가 계속 S3로부터 trigger되어 들어오면 유실 될 수 있을 것으로 보입니다. 
+ - 그리고, 이런한 [inflight 메시지가 Standard 일때 120,000개, FIFO일때는 20,000개가 넘으면, SQS가 SQSOverLimit error를 발생](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-queues.html)시켜, 새로운 메시지를 저장하지 못하게 되므로, 이런 상태에서 새로운 event가 계속 S3로부터 trigger되어 들어오면 유실 될 수 있을 것으로 보입니다. 
  
 ## 해결 방안
 
