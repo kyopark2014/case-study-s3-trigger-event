@@ -76,7 +76,7 @@ sqs.receiveMessage(params, function(err, data) {
 
 EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해야 하는 경우에는 아래와 같은 방법으로 변경도 가능합니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/165838396-b5e369a5-7cf1-4f33-9c85-41b372a4d714.png)
+![image](https://user-images.githubusercontent.com/52392004/165844568-929eb7f1-8147-4b05-85f6-3ae161afda7d.png)
 
 
 2) [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 이 방법은 기존 step functions을 glue를 통해 해결하여야 합니다. 
@@ -91,7 +91,6 @@ EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해
 ![image](https://user-images.githubusercontent.com/52392004/165841203-bd871114-c554-4b6a-ab46-c8f43b081a5c.png)
 
 
-Amazon S3에서 생성된 신규 object event를 SQS가 아닌 DynamoDB에 저장후에, EventBridge가 생성한 Cron job으로 Lambda(schedular)가 DynamoDB를 조회한 후, SQS에 push 하여 
+Amazon S3에서 생성된 신규 object event를 SQS가 아닌 DynamoDB에 저장후에, EventBridge가 생성한 Cron job으로 Lambda(schedular)가 DynamoDB를 조회한 후, SQS에 push 하는 방법입니다.
 
-![image](https://user-images.githubusercontent.com/52392004/165844026-ad1893d6-c781-4fdf-8197-f119a4a6dff5.png)
-
+![image](https://user-images.githubusercontent.com/52392004/165844717-2fe78d47-b7e7-49f1-9c3c-c7120a2d177b.png)
