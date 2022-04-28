@@ -29,7 +29,10 @@
  
 ## 해결 방안
 
-- [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달이 안되도록 한다면 ?
+- [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달되는 event를 제한하거나 스케줄링 할 수 있다면  
+
+https://docs.aws.amazon.com/ko_kr/sdk-for-java/v1/developer-guide/examples-sqs-messages.html
+
 
 
 
