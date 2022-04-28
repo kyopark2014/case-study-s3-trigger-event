@@ -17,9 +17,15 @@
 
 ### SQS 기본 동작 
 
-SQS에 저장된 메시지는 [consumer가 가져가서 처리가 다 끝나면 영구적으로 삭제](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#1-successful-processing)합니다. 상기 그림에서는 Lambda for SQS는 SQS의 메시지를 받아서 AWS Step Functions에 전달 후 삭제 합니다. 또는 Step Functions는 처리가 끝나면 SQS의 메시지를 삭제 합니다. 
+- SQS에 저장된 메시지는 [consumer가 가져가서 처리가 다 끝나면 영구적으로 삭제](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#1-successful-processing)해야 합니다. 
 
-SQS에 저장된 메시지를 consumer가 가져가서 처리를 하지만 [처리가 안되어서 다시 읽을 수](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#3-maximum-receive-count-set-too-low)도 있는데, 이때 [MaxReceiverCount(up to 1000)가 넘으면 DLQ(Dead Letter Queue)로 전달](https://github.com/kyopark2014/technical-summary/blob/main/sqs.md) 됩니다. 
+- SQS에 저장된 메시지를 [consumer가 가져갔으나 지우지 않으면(inflight)](https://www.bluematador.com/docs/troubleshooting/aws-sqs-limits), Standard 메시지는 120,000개, FIFO는 20,000개의 제한이 있습니다. 
+
+- SQS에 저장된 메시지를 consumer가 가져가서 처리를 하지만 [처리가 안되어서 다시 읽을 수](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#3-maximum-receive-count-set-too-low)도 있는데, 이때 [MaxReceiverCount(up to 1000)가 넘으면 DLQ(Dead Letter Queue)로 전달](https://github.com/kyopark2014/technical-summary/blob/main/sqs.md) 됩니다. 
+
+- SQS의 메시지는 [retension time(default: 4days, up to 14days)이후에는 마찬가지로 DLQ로 전달](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#4-message-retention-period-exceeded)됩니다.
+
+
 
 
 [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
