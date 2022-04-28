@@ -48,5 +48,31 @@ https://sqs.us-east-2.amazonaws.com/123456789012/MyQueue/
 &AUTHPARAMS
 ```
 
+[Calling the receiveMessage operation](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#receiveMessage-property)
+
+```java
+var params = {
+  QueueUrl: 'STRING_VALUE', /* required */
+  AttributeNames: [
+    All | Policy | VisibilityTimeout | MaximumMessageSize | MessageRetentionPeriod | ApproximateNumberOfMessages | ApproximateNumberOfMessagesNotVisible | CreatedTimestamp | LastModifiedTimestamp | QueueArn | ApproximateNumberOfMessagesDelayed | DelaySeconds | ReceiveMessageWaitTimeSeconds | RedrivePolicy | FifoQueue | ContentBasedDeduplication | KmsMasterKeyId | KmsDataKeyReusePeriodSeconds | DeduplicationScope | FifoThroughputLimit | RedriveAllowPolicy | SqsManagedSseEnabled,
+    /* more items */
+  ],
+  MaxNumberOfMessages: 'NUMBER_VALUE',
+  MessageAttributeNames: [
+    'STRING_VALUE',
+    /* more items */
+  ],
+  ReceiveRequestAttemptId: 'STRING_VALUE',
+  VisibilityTimeout: 'NUMBER_VALUE',
+  WaitTimeSeconds: 'NUMBER_VALUE'
+};
+sqs.receiveMessage(params, function(err, data) {
+  if (err) console.log(err, err.stack); // an error occurred
+  else     console.log(data);           // successful response
+});
+```
+이 경우에도 어떤 상황에서 SQS에 저장된 message가 삭제되어버리면 처리할 수 없는 문제점이 남아 있습니다. 이것은 DynamoDB와 같은 데이터베이스를 사용하여야 해결 가능한 케이스로 보여집니다. 
+
+
 2) [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
 
