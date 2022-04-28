@@ -33,7 +33,8 @@
 
 여기서는 SQS의 신규 메시지 event를 Lambda가 받아서 처리하지 않고, Event Bridge가 주기적으로 생성한 cron job 형태의 event로 Lambda를 Trigger하여, SQS에 있는 메시지를 읽어가는 구조입니다. S3에 새로 Object 생성되더라도, Step Functions이 바로 trigger 되지 않고, 정해진 스케줄에 따라 원하는 만큼만 event를 처리할 수 있습니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/165829888-ecfa4246-f080-49e1-af9f-7c5495446173.png)
+
+![image](https://user-images.githubusercontent.com/52392004/165837257-69cc32c7-22b8-4846-9445-62e0f93a6678.png)
 
 [Sample Request](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html)
 
