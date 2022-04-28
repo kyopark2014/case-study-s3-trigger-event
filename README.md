@@ -15,3 +15,5 @@
 - Amazon Step Functions의 처리량보다 훨씬 큰 트래픽이 일시적으로 주입되어서 SQS가 full 되었다면, event가 유실 되는 케이스가 발생할 수 있습니다. 
 
 
+[Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
+
