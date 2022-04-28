@@ -12,6 +12,6 @@
 
 - Amazon S3에 저장되는 데이터가 일시적으로 1초에 1개보다 더 많이 들어오더라도, SQS가 full 되지 않으면, event는 유실되지 않고 정상적으로 처리가 됩니다. Amazon SQS의 Standard type은 120,000개의 event를 가지고 있을수 있습니다.
 
-- Amazon Step Functions의 처리량보다 훨씬 큰 트래픽이 일시적으로 주입되어 SQS가 full 되었다면, event가 유실 될 수 있습니다. 
+- Amazon Step Functions의 처리량보다 훨씬 큰 트래픽이 일시적으로 주입되어서 SQS가 full 되었다면, event가 유실 되는 케이스가 발생할 수 있습니다. 
 
 
