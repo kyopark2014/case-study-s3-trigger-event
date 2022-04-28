@@ -10,7 +10,7 @@
 
 - AWS Step Functions에서 1개의 event를 처리 할 때 1초라고 가정합니다. S3에 저장되는 데이터가 1초보다 천천히 들어온다면, Amazon SQS에 event가 쌓이지 않고 잘 처리가 됩니다.
 
-- Amazon S3에 저장되는 데이터가 일시적으로 1초에 1개보다 더 많이 들어오더라도, SQS가 full 되지 않으면, event는 유실되지 않고 정상적으로 처리가 됩니다. Amazon SQS의 Standard type은 120,000개의 event를 가지고 있을수 있습니다.
+- Amazon S3에 저장되는 데이터가 일시적으로 1초에 1개보다 더 많이 들어오더라도, SQS에 message는 제한없이 저장됩니다.  full 되지 않으면, event는 유실되지 않고 정상적으로 처리가 됩니다. Amazon SQS의 Standard type은 120,000개의 event를 가지고 있을수 있습니다.
 
 - Amazon Step Functions의 처리량보다 훨씬 큰 트래픽이 일시적으로 주입되어서 SQS가 full 되었다면, event가 유실 되는 케이스가 발생할 수 있습니다. 
 
@@ -19,7 +19,7 @@
 
 - SQS에 저장된 메시지는 [consumer가 가져가서 처리가 다 끝나면 영구적으로 삭제](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#1-successful-processing)해야 합니다. 
 
-- SQS에 저장된 메시지를 [consumer가 가져갔으나 지우지 않으면(inflight)](https://www.bluematador.com/docs/troubleshooting/aws-sqs-limits), Standard 메시지는 120,000개, FIFO는 20,000개의 제한이 있습니다. 
+- SQS에 저장된 메시지를 [consumer가 가져갔으나 지우지 않으면(inflight)](https://www.bluematador.com/docs/troubleshooting/aws-sqs-limits), Standard 메시지는 120,000개, FIFO는 20,000개의 제한이 있습니다. 이 할당량은 [AWS에 요청하여 변경](https://us-east-1.console.aws.amazon.com/support/home?region=us-east-1#/case/create?issueType=service-limit-increase&limitType=service-code-sqs) 할 수 있습니다.
 
 - SQS에 저장된 메시지를 consumer가 가져가서 처리를 하지만 [처리가 안되어서 다시 읽을 수](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#3-maximum-receive-count-set-too-low)도 있는데, 이때 [MaxReceiverCount(up to 1000)가 넘으면 DLQ(Dead Letter Queue)로 전달](https://github.com/kyopark2014/technical-summary/blob/main/sqs.md) 됩니다. 
 
