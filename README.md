@@ -35,5 +35,18 @@
 
 ![image](https://user-images.githubusercontent.com/52392004/165829888-ecfa4246-f080-49e1-af9f-7c5495446173.png)
 
+[Sample Request](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html)
+
+```c
+https://sqs.us-east-2.amazonaws.com/123456789012/MyQueue/
+?Action=ReceiveMessage
+&MaxNumberOfMessages=5
+&VisibilityTimeout=15
+&AttributeName=All
+&Expires=2020-04-18T22%3A52%3A43PST
+&Version=2012-11-05
+&AUTHPARAMS
+```
+
 2) [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
 
