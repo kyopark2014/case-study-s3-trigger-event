@@ -90,3 +90,8 @@ EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해
 
 ![image](https://user-images.githubusercontent.com/52392004/165841203-bd871114-c554-4b6a-ab46-c8f43b081a5c.png)
 
+
+Amazon S3에서 생성된 신규 object event를 SQS가 아닌 DynamoDB에 저장후에, EventBridge가 생성한 Cron job으로 Lambda(schedular)가 DynamoDB를 조회한 후, SQS에 push 하여 
+
+![image](https://user-images.githubusercontent.com/52392004/165844026-ad1893d6-c781-4fdf-8197-f119a4a6dff5.png)
+
