@@ -13,7 +13,7 @@
 
 ## Preblem Description 
 
-아래 그림과 같이 다수의 디바이스들이 Amazon S3에 json 파일 형태로 디바이스의 status를 업로드 한다면, Lambda가 S3에 저장되는 신규 Object 생성 event를 trigger로 받아서, SQS에 event를 message로 쌓아놓을 수 있습니다. 이후 AWS Step Functions는 SQS의 신규 메시지 이벤트를 받아서 처리하는 케이스입니다. 
+아래 그림과 같이 다수의 디바이스들이 Amazon S3에 json 파일 형태로 디바이스의 status를 업로드 한다면, Lambda가 S3에 저장되는 신규 Object 생성 event를 trigger로 받아서, SQS에 event를 message로 쌓아놓을 수 있습니다.  
 
 ![image](https://user-images.githubusercontent.com/52392004/165836642-69ccb24b-b51c-479b-9a8e-f6d7d018179f.png)
 
