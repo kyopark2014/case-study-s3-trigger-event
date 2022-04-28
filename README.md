@@ -1,4 +1,4 @@
-# case-s3-event-logging
+# Amazon S3의 신규 Object 생성 Trigger의 스케줄링 방법 
 
 ## SQS 기본 동작 
 
