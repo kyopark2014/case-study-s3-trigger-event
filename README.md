@@ -91,6 +91,6 @@ EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해
 ![image](https://user-images.githubusercontent.com/52392004/165841203-bd871114-c554-4b6a-ab46-c8f43b081a5c.png)
 
 
-아래는 Amazon S3에서 생성된 신규 object event를 SQS가 아닌 DynamoDB에 저장후에, EventBridge가 생성한 Cron job으로 Lambda(schedular)가 DynamoDB를 조회한 후, SQS에 push 하는 방법입니다.
+또 다른 방법으로, 아래에서는 Amazon S3에서 생성된 신규 object event를 SQS가 아닌 DynamoDB에 저장후에, EventBridge가 생성한 Cron job으로 Lambda(schedular)가 DynamoDB를 조회한 후, SQS에 push 하는 방법입니다.
 
 ![image](https://user-images.githubusercontent.com/52392004/165844717-2fe78d47-b7e7-49f1-9c3c-c7120a2d177b.png)
