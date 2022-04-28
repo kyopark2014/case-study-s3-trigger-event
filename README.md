@@ -1,2 +1,17 @@
 # case-s3-event-logging
-It is a case study for s3 events management.
+
+## Preblem Description 
+
+아래 그림과 같이 다수의 디바이스들이 Amazon S3에 디바이스의 state와 같은 data를 json 파일 형태후 AWS Step Functions으로 처리하는 케이스가 있습니다. Amazon S3에 object가 생성되어 발생하는 event를 Lambda가 받아서 Amazon Step Functions에서 처리할때, 일시적으로 처리량보다 더 많은 event가 trigger될 때 유실하지 않도록, Amazon SQS를 사용하고 있습니다. 하지만, SQS의 Queue size에 제한이 있으므로, 무한대로 Queuing을 할 수는 없습니다. 
+
+<img width="654" alt="image" src="https://user-images.githubusercontent.com/52392004/165797212-de9ed666-7a1f-456a-9d3f-638d1f28d168.png">
+
+상기 케이스에 대한 케이스는 아래와 같습니다.
+
+- AWS Step Functions에서 1개의 event를 처리 할 때 1초라고 가정합니다. S3에 저장되는 데이터가 1초보다 천천히 들어온다면, Amazon SQS에 event가 쌓이지 않고 잘 처리가 됩니다.
+
+- Amazon S3에 저장되는 데이터가 일시적으로 1초에 1개보다 더 많이 들어오더라도, SQS가 full 되지 않으면, event는 유실되지 않고 정상적으로 처리가 됩니다. Amazon SQS의 Standard type은 120,000개의 event를 가지고 있을수 있습니다.
+
+- Amazon Step Functions의 처리량보다 훨씬 큰 트래픽이 일시적으로 주입되어 SQS가 full 되었다면, event가 유실 될 수 있습니다. 
+
+
