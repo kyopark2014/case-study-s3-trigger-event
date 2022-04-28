@@ -29,12 +29,13 @@
  
 ## 해결 방안
 
-- [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달되는 event를 제한하거나 스케줄링 할 수 있다면  
+1) [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달되는 event를 제한하거나 스케줄링 할 수 있다면 문제 해결이 가능할 것으로 보여집니다. 
+
+![image](https://user-images.githubusercontent.com/52392004/165829215-c21f969b-d6ea-43f9-a0d8-56f2db51eaee.png)
+
 
 https://docs.aws.amazon.com/ko_kr/sdk-for-java/v1/developer-guide/examples-sqs-messages.html
 
 
-
-
-- [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
+2) [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
 
