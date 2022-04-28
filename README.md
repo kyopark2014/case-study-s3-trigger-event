@@ -15,9 +15,9 @@
 
 아래 그림과 같이 다수의 디바이스들이 Amazon S3에 디바이스의 state와 같은 data를 json 파일 형태 업로드 후, AWS Step Functions으로 처리하는 케이스가 있습니다. Amazon S3에 object가 생성되어 발생하는 event를 Lambda가 받아서 Amazon Step Functions에서 처리하게 됩니다. 
 
-<img width="654" alt="image" src="https://user-images.githubusercontent.com/52392004/165797212-de9ed666-7a1f-456a-9d3f-638d1f28d168.png">
+![image](https://user-images.githubusercontent.com/52392004/165829694-57037577-13db-4ef5-8805-dcdfbbc39f13.png)
 
-문제가 되는 케이스의 한 예는 아래와 같습니다.
+아래는 예상되는 문제 케이스 입니다. 
 
 - AWS Step Functions에서 1개의 event를 처리 할 때 1초라고 가정합니다. S3에 저장되는 데이터가 1초보다 천천히 들어온다면, Amazon SQS에 event가 쌓이지 않고 잘 처리가 됩니다.
 
@@ -31,11 +31,7 @@
 
 1) [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달되는 event를 제한하거나 스케줄링 할 수 있다면 문제 해결이 가능할 것으로 보여집니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/165829215-c21f969b-d6ea-43f9-a0d8-56f2db51eaee.png)
-
-
-https://docs.aws.amazon.com/ko_kr/sdk-for-java/v1/developer-guide/examples-sqs-messages.html
-
+![image](https://user-images.githubusercontent.com/52392004/165829888-ecfa4246-f080-49e1-af9f-7c5495446173.png)
 
 2) [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 
 
