@@ -2,11 +2,11 @@
 
 ## Preblem Description 
 
-아래 그림과 같이 다수의 디바이스들이 Amazon S3에 디바이스의 state와 같은 data를 json 파일 형태후 AWS Step Functions으로 처리하는 케이스가 있습니다. Amazon S3에 object가 생성되어 발생하는 event를 Lambda가 받아서 Amazon Step Functions에서 처리할때, 일시적으로 처리량보다 더 많은 event가 trigger될 때 유실하지 않도록, Amazon SQS를 사용하고 있습니다. 하지만, SQS의 Queue size에 제한이 있으므로, 무한대로 Queuing을 할 수는 없습니다. 
+아래 그림과 같이 다수의 디바이스들이 Amazon S3에 디바이스의 state와 같은 data를 json 파일 형태후 AWS Step Functions으로 처리하는 케이스가 있습니다. Amazon S3에 object가 생성되어 발생하는 event를 Lambda가 받아서 Amazon Step Functions에서 처리하게 됩니다. 일시적으로 처리량보다 더 많은 event가 trigger되었을때를 가졍하여 Amazon SQS를 사용하고 있습니다. 
 
 <img width="654" alt="image" src="https://user-images.githubusercontent.com/52392004/165797212-de9ed666-7a1f-456a-9d3f-638d1f28d168.png">
 
-상기 케이스에 대한 케이스는 아래와 같습니다.
+문제가 되는 케이스의 한 예는 아래와 같습니다.
 
 - AWS Step Functions에서 1개의 event를 처리 할 때 1초라고 가정합니다. S3에 저장되는 데이터가 1초보다 천천히 들어온다면, Amazon SQS에 event가 쌓이지 않고 잘 처리가 됩니다.
 
