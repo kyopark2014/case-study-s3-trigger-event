@@ -74,6 +74,8 @@ sqs.receiveMessage(params, function(err, data) {
 ```
 이 경우에도 어떤 비정상 상황에서 SQS에 저장된 message가 삭제되어 버린다면, event를 읽어버려서 정상적으로 데이터를 처리할 수 없는 문제점이 남아 있습니다. 이것은 DynamoDB와 같은 데이터베이스를 사용하여 모든 event를 logging 한 후, 순차적으로 처리하는 방법으로 접근 할 수 있을것으로 보입니다.
 
+EventBridge event 
+
 
 2) [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 이 방법은 기존 step functions을 glue를 통해 해결하여야 합니다. 
 
