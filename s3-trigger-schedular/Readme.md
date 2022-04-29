@@ -6,9 +6,7 @@
 
 여기서 구현하려는 Archiecture는 아래와 같이, Amazon S3, Amazon SQS와 Amazon EventBridge로 구성됩니다. 여기서 StepFunction은 Schedular와 관계없는 Load에 관계되므로, 편의상 log로 대체합니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/165913999-4feac784-7e81-401c-9437-fd398a40b4ba.png)
-
-
+![image](https://user-images.githubusercontent.com/52392004/165916282-d38b28dc-c8c4-4dfd-bfa7-a4f471e956b7.png)
 
 ## CDK 
 
