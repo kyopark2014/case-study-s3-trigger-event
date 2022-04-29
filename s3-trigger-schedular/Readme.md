@@ -27,7 +27,7 @@ $ cdk destory
 
 ## Scheduler
 
-Scheduler가 SQS for S3로 부터 메시지 요청시 받은 메시지의 예는 아래와 같습니다. 
+Scheduler가 SQS for S3로 부터 메시지 요청시 받은 메시지의 예는 아래와 같습니다. 여기서 "Messages"를 추출하고, 다시 Body들을 뽑습니다.
 
 ```java
 {
