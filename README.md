@@ -11,7 +11,7 @@
 - SQS의 메시지는 [retension time(default: 4days, up to 14days)이후에는 마찬가지로 DLQ로 전달](https://bitesizedserverless.com/bite/the-9-ways-an-sqs-message-can-be-deleted/#4-message-retention-period-exceeded)됩니다.
 
 
-## Preblem Description 
+## Problem Description 
 
 아래 그림과 같이 다수의 디바이스들이 Amazon S3에 json 파일 형태로 디바이스의 status를 업로드 한다면, Lambda가 S3에 저장되는 신규 Object 생성 event를 trigger로 받아서, SQS에 event를 message로 쌓아놓을 수 있습니다.  
 
