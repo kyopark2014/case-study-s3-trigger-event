@@ -29,52 +29,14 @@
  
 ## 해결 방안
 
-1) [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달되는 event를 제한하거나 스케줄링 할 수 있다면 문제 해결이 가능할 것으로 보여집니다. 
+1) [SQS에 message는 제한없이 쌓일 수 있으므로](https://aws.amazon.com/ko/sqs/faqs/), Step Functions에 전달되는 event를 제한하거나 스케줄링 할 수 있다면 문제 해결이 가능합니다.
 
 여기서는 SQS의 신규 메시지 event를 Lambda가 받아서 처리하지 않고, Event Bridge가 주기적으로 생성한 cron job 형태의 event로 Lambda를 Trigger하여, SQS에 있는 메시지를 읽어가는 구조입니다. S3에 새로 Object 생성되더라도, Step Functions이 바로 trigger 되지 않고, 정해진 스케줄에 따라 원하는 만큼만 event를 처리할 수 있습니다. 
 
-
 ![image](https://user-images.githubusercontent.com/52392004/165837257-69cc32c7-22b8-4846-9445-62e0f93a6678.png)
 
-[Sample Request](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html)
+EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해야 하는 경우에는 아래와 같은 방법으로 변경도 가능합니다. 아래 
 
-```c
-https://sqs.us-east-2.amazonaws.com/123456789012/MyQueue/
-?Action=ReceiveMessage
-&MaxNumberOfMessages=5
-&VisibilityTimeout=15
-&AttributeName=All
-&Expires=2020-04-18T22%3A52%3A43PST
-&Version=2012-11-05
-&AUTHPARAMS
-```
-
-[Calling the receiveMessage operation](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#receiveMessage-property)
-
-```java
-var params = {
-  QueueUrl: 'STRING_VALUE', /* required */
-  AttributeNames: [
-    All | Policy | VisibilityTimeout | MaximumMessageSize | MessageRetentionPeriod | ApproximateNumberOfMessages | ApproximateNumberOfMessagesNotVisible | CreatedTimestamp | LastModifiedTimestamp | QueueArn | ApproximateNumberOfMessagesDelayed | DelaySeconds | ReceiveMessageWaitTimeSeconds | RedrivePolicy | FifoQueue | ContentBasedDeduplication | KmsMasterKeyId | KmsDataKeyReusePeriodSeconds | DeduplicationScope | FifoThroughputLimit | RedriveAllowPolicy | SqsManagedSseEnabled,
-    /* more items */
-  ],
-  MaxNumberOfMessages: 'NUMBER_VALUE',
-  MessageAttributeNames: [
-    'STRING_VALUE',
-    /* more items */
-  ],
-  ReceiveRequestAttemptId: 'STRING_VALUE',
-  VisibilityTimeout: 'NUMBER_VALUE',
-  WaitTimeSeconds: 'NUMBER_VALUE'
-};
-sqs.receiveMessage(params, function(err, data) {
-  if (err) console.log(err, err.stack); // an error occurred
-  else     console.log(data);           // successful response
-});
-```
-
-
-EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해야 하는 경우에는 아래와 같은 방법으로 변경도 가능합니다. 
 
 ![image](https://user-images.githubusercontent.com/52392004/165844568-929eb7f1-8147-4b05-85f6-3ae161afda7d.png)
 
