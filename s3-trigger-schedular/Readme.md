@@ -51,4 +51,16 @@ Scheduler가 SQS for S3로 부터 메시지 요청시 받은 메시지의 예는
 }
 ```
 
+## S3 Event Trigger
 
+[Lambda for S3](https://github.com/kyopark2014/case-study-s3-trigger-event/blob/main/s3-trigger-schedular/cdkscheduler/repositories/lambda-for-s3-trigger/index.js)와 같이 
+
+
+```java
+    const bucket = event.Records[0].s3.bucket.name;
+    const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
+    const eventInfo = {
+        Bucket: bucket,
+        Key: key,
+    }; 
+```    
