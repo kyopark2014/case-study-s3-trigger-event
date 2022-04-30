@@ -9,6 +9,8 @@ exports.handler = async (event, context) => {
     console.log('## ENVIRONMENT VARIABLES: ' + JSON.stringify(process.env))
     console.log('## EVENT: ' + JSON.stringify(event))
 
+    let isCompleted = false; 
+
     const sqsReceiveParams = {
         QueueUrl: sqsSrcUrl,
         AttributeNames: [
@@ -32,14 +34,15 @@ exports.handler = async (event, context) => {
         let events = sqsReceiveResponse['Messages'];
         if(events) {
             // console.log("events: %j", events);
-            for(let i=0;i<events.length;i++) {
-                const body = JSON.parse(events[i]['Body']);
+
+            events.forEach(event => {                
+                const body = JSON.parse(event['Body']);
                 console.log('key: '+body.Key);
 
                 // remove message queue 
                 const entry = {
-                    Id: events[i]['MessageId'],
-                    ReceiptHandle: events[i]['ReceiptHandle']
+                    Id: event['MessageId'],
+                    ReceiptHandle: event['ReceiptHandle']
                 }
                 entries.push(entry);
                 
@@ -50,19 +53,23 @@ exports.handler = async (event, context) => {
                     MessageBody: JSON.stringify(body), 
                     QueueUrl: sqsDstUrl
                 };  
-
                 try {
-                    const resp = await sqs.sendMessage(sqsSendParams).promise();
-                    // console.log('resp: %j',resp);
-                    console.log('Sent MessageId: ', resp.MessageId);
-
+                    sqs.sendMessage(sqsSendParams, function(err, status){
+                        if(err) console.log('err: '+err);
+                        else {
+                            // console.log('status: %j',status);
+                            console.log('Sent MessageId: ', status.MessageId);
+                        }
+                    });  
                 } catch (err) {
                     console.log(err);
                 } 
-            }
+            }); 
         }
         else {
             console.log('No more new message');
+
+            if(entries.length==0) isCompleted = true;
             break;
         }
 
@@ -75,10 +82,25 @@ exports.handler = async (event, context) => {
                 QueueUrl: sqsSrcUrl,
             }, function(err,data) {
                 if(err) console.log('error: '+err);
-                else console.log('delete status: %j', data);
+                else console.log('delet status: %j', data);
             });    
         }
     }
+
+    function wait(){
+        return new Promise((resolve, reject) => {
+          if(!isCompleted) {
+            setTimeout(() => resolve("wait..."), 1000)
+          }
+          else {
+            setTimeout(() => resolve("closing..."), 0)
+          }
+        });
+      }
+      console.log(await wait());
+      console.log(await wait());
+      console.log(await wait());
+      console.log(await wait());
 
     const response = {
         statusCode: 200,

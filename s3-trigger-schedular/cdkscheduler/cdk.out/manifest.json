@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/73886d8fe51d05dbaaaa30c56391f4d708ea0e4b52c73654309a57b2b4717881.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/70d08bdf3ebe20fd31342648a720cd90526302b0c65d702874782e71bcd32620.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -187,6 +187,36 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "ArnOfLambdaForSchedular"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvokeServiceRoleA3E69C0E"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvokeServiceRoleDefaultPolicyE17849B4"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvoke6C34AD17"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/SqsEventSource:CdkschedulerStackQueueForEventA24C1406/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvokeSqsEventSourceCdkschedulerStackQueueForEventA24C140615F62060"
+          }
+        ],
+        "/CdkschedulerStack/ArnOfLambdaForInvoke": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ArnOfLambdaForInvoke"
           }
         ],
         "/CdkschedulerStack/Cron/Resource": [

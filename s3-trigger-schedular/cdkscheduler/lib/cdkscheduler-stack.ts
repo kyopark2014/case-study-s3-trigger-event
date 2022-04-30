@@ -91,6 +91,7 @@ export class CdkschedulerStack extends Stack {
       environment: {
         sqsSrcUrl: queueforS3.queueUrl,
         sqsDstUrl: queueforEvent.queueUrl,
+        capacity: '100' // the capable capacity per operation by the scheduler 
       }
     }); 
     // grant permissions
@@ -101,6 +102,27 @@ export class CdkschedulerStack extends Stack {
     new cdk.CfnOutput(this, 'ArnOfLambdaForSchedular', {
       value: lambdaSchedular.functionArn,
       description: 'The arn of the lambda for Schedular',
+    });
+
+    // Lambda - Invoke
+    const lambdaInvoke = new lambda.Function(this, "LambdaForInvoke", {
+      description: 'lambda for invoke',
+      runtime: lambda.Runtime.NODEJS_14_X, 
+      code: lambda.Code.fromAsset("repositories/lambda-for-invoke"), 
+      handler: "index.handler", 
+      timeout: cdk.Duration.seconds(30),
+      environment: {
+        sqsUrl: queueforEvent.queueUrl,
+      }
+    }); 
+    // grant permissions
+    s3Bucket.grantRead(lambdaInvoke);
+    lambdaInvoke.addEventSource(new SqsEventSource(queueforEvent)); 
+    
+    // check functional Arn
+    new cdk.CfnOutput(this, 'ArnOfLambdaForInvoke', {
+      value: lambdaInvoke.functionArn,
+      description: 'The arn of the lambda for Invoke',
     });
 
     // cron job - EventBridge
