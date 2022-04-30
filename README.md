@@ -35,8 +35,7 @@
 
 ![image](https://user-images.githubusercontent.com/52392004/165837257-69cc32c7-22b8-4846-9445-62e0f93a6678.png)
 
-EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해야 하는 경우에는 아래와 같은 방법으로 변경도 가능합니다. 아래 
-
+EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해야 하는 경우에는 아래와 같은 방법으로 변경도 가능합니다. 아래 방법에 대한 [셈플 코드](https://github.com/kyopark2014/case-study-s3-trigger-event/tree/main/s3-trigger-schedular)를 참고 바랍니다.
 
 ![image](https://user-images.githubusercontent.com/52392004/165844568-929eb7f1-8147-4b05-85f6-3ae161afda7d.png)
 
