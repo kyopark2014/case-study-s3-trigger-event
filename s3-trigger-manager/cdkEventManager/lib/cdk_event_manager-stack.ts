@@ -59,6 +59,13 @@ export class CdkEventManagerStack extends Stack {
       partitionKey: { name: 'Timestamp', type: dynamodb.AttributeType.STRING },
     });
 
+    // SQS - Event
+    const queueforEvent = new sqs.Queue(this, 'QueueForEvent');
+    new cdk.CfnOutput(this, 'queueforEventUrl', {
+      value: queueforEvent.queueUrl,
+      description: 'The queue url of evnet',
+    });
+
     // Lambda - S3
     const lambdaS3Trigger = new lambda.Function(this, "LambdaS3Trigger", {
       description: 'managing s3 event and then push the event into SQS',
@@ -83,5 +90,55 @@ export class CdkEventManagerStack extends Stack {
     // queueforS3.grantSendMessages(lambdaS3Trigger);
     dataTable.grantReadWriteData(lambdaS3Trigger);
     
+    // Lambda - Event manager
+    const lambdaSchedular = new lambda.Function(this, "LambdaForManager", {
+      description: 'event manager',
+      runtime: lambda.Runtime.NODEJS_14_X, 
+      code: lambda.Code.fromAsset("repositories/lambda-for-event"), 
+      handler: "index.handler", 
+      timeout: cdk.Duration.seconds(30),
+      environment: {
+        tableName: tableName,
+        sqsDstUrl: queueforEvent.queueUrl,
+        capacity: '100' // the capable capacity per operation by the scheduler 
+      }
+    }); 
+    // grant permissions
+    s3Bucket.grantRead(lambdaS3Trigger);
+    dataTable.grantReadWriteData(lambdaS3Trigger);
+    queueforEvent.grantSendMessages(lambdaSchedular);
+    // check functional Arn
+    new cdk.CfnOutput(this, 'ArnOfLambdaForSchedular', {
+      value: lambdaSchedular.functionArn,
+      description: 'The arn of the lambda for Schedular',
+    });
+
+    // Lambda - Invoke
+    const lambdaInvoke = new lambda.Function(this, "LambdaForInvoke", {
+      description: 'lambda for invoke',
+      runtime: lambda.Runtime.NODEJS_14_X, 
+      code: lambda.Code.fromAsset("repositories/lambda-for-invoke"), 
+      handler: "index.handler", 
+      timeout: cdk.Duration.seconds(30),
+      environment: {
+        sqsUrl: queueforEvent.queueUrl,
+      }
+    }); 
+    // grant permissions
+    s3Bucket.grantRead(lambdaInvoke);
+    lambdaInvoke.addEventSource(new SqsEventSource(queueforEvent)); 
+    
+    // check functional Arn
+    new cdk.CfnOutput(this, 'ArnOfLambdaForInvoke', {
+      value: lambdaInvoke.functionArn,
+      description: 'The arn of the lambda for Invoke',
+    });
+
+    // cron job - EventBridge
+    const rule = new events.Rule(this, 'Cron', {
+      description: "To run lambda-for-schedular periodically",
+      schedule: events.Schedule.expression('rate(1 minute)'),
+    }); 
+    rule.addTarget(new targets.LambdaFunction(lambdaSchedular)); 
   }
 }
