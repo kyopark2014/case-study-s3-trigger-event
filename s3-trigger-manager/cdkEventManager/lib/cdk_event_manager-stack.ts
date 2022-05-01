@@ -46,8 +46,9 @@ export class CdkEventManagerStack extends Stack {
     });
 
     // DynamoDB
+    const tableName = "dynamodb-s3-event";
     const dataTable = new dynamodb.Table(this, 'dynamodb-s3-event', {
-      tableName: 'dynamodb-s3-event',
+      tableName: tableName,
         partitionKey: { name: 'Id', type: dynamodb.AttributeType.STRING },
         sortKey: { name: 'Timestamp', type: dynamodb.AttributeType.STRING },
         billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -66,7 +67,8 @@ export class CdkEventManagerStack extends Stack {
       handler: "index.handler", 
       timeout: cdk.Duration.seconds(3),
       environment: {
-        sqsUrl: queueforS3.queueUrl,
+        // sqsUrl: queueforS3.queueUrl,
+        tableName: "tableName",
       }
     }); 
     new cdk.CfnOutput(this, 'ArnOfLambdaForS3Trigger', {
@@ -78,7 +80,8 @@ export class CdkEventManagerStack extends Stack {
       // filters: [ { prefix: 'subdir/' } ] // optional
     }));
     s3Bucket.grantRead(lambdaS3Trigger);
-    queueforS3.grantSendMessages(lambdaS3Trigger);
+    // queueforS3.grantSendMessages(lambdaS3Trigger);
+    dataTable.grantReadWriteData(lambdaS3Trigger);
     
   }
 }

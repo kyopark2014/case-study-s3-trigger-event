@@ -1,0 +1,262 @@
+{
+  "version": "16.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "CdkschedulerStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdkschedulerStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdkschedulerStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "CdkschedulerStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/70d08bdf3ebe20fd31342648a720cd90526302b0c65d702874782e71bcd32620.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdkschedulerStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdkschedulerStack.assets"
+      ],
+      "metadata": {
+        "/CdkschedulerStack/s3-trigger/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3triggerCE04A23F"
+          }
+        ],
+        "/CdkschedulerStack/s3-trigger/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3triggerPolicy35A5B84F"
+          }
+        ],
+        "/CdkschedulerStack/s3-trigger/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3triggerAutoDeleteObjectsCustomResource41D6CC81"
+          }
+        ],
+        "/CdkschedulerStack/s3-trigger/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3triggerNotifications22A3DFAF"
+          }
+        ],
+        "/CdkschedulerStack/s3-trigger/AllowBucketNotificationsToCdkschedulerStackLambdaS3Trigger609BA2DD": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3triggerAllowBucketNotificationsToCdkschedulerStackLambdaS3Trigger609BA2DD9B2BFCD8"
+          }
+        ],
+        "/CdkschedulerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/CdkschedulerStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/CdkschedulerStack/bucketName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bucketName"
+          }
+        ],
+        "/CdkschedulerStack/s3Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3Arn"
+          }
+        ],
+        "/CdkschedulerStack/s3Path": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3Path"
+          }
+        ],
+        "/CdkschedulerStack/QueueForS3Trigger/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueueForS3TriggerC3587E68"
+          }
+        ],
+        "/CdkschedulerStack/queueforS3Url": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "queueforS3Url"
+          }
+        ],
+        "/CdkschedulerStack/LambdaS3Trigger/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaS3TriggerServiceRole1351785D"
+          }
+        ],
+        "/CdkschedulerStack/LambdaS3Trigger/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaS3TriggerServiceRoleDefaultPolicyF882AC3B"
+          }
+        ],
+        "/CdkschedulerStack/LambdaS3Trigger/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaS3Trigger08CA0BBF"
+          }
+        ],
+        "/CdkschedulerStack/ArnOfLambdaForS3Trigger": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ArnOfLambdaForS3Trigger"
+          }
+        ],
+        "/CdkschedulerStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+          }
+        ],
+        "/CdkschedulerStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36"
+          }
+        ],
+        "/CdkschedulerStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
+          }
+        ],
+        "/CdkschedulerStack/QueueForEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueueForEvent6AFC0048"
+          }
+        ],
+        "/CdkschedulerStack/queueforEventUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "queueforEventUrl"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForSchedular/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForSchedularServiceRoleD8805C15"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForSchedular/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForSchedularServiceRoleDefaultPolicy0EB1F10E"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForSchedular/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForSchedular48058C64"
+          }
+        ],
+        "/CdkschedulerStack/ArnOfLambdaForSchedular": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ArnOfLambdaForSchedular"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvokeServiceRoleA3E69C0E"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvokeServiceRoleDefaultPolicyE17849B4"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvoke6C34AD17"
+          }
+        ],
+        "/CdkschedulerStack/LambdaForInvoke/SqsEventSource:CdkschedulerStackQueueForEventA24C1406/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaForInvokeSqsEventSourceCdkschedulerStackQueueForEventA24C140615F62060"
+          }
+        ],
+        "/CdkschedulerStack/ArnOfLambdaForInvoke": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ArnOfLambdaForInvoke"
+          }
+        ],
+        "/CdkschedulerStack/Cron/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CronA79E22A9"
+          }
+        ],
+        "/CdkschedulerStack/Cron/AllowEventRuleCdkschedulerStackLambdaForSchedular8A8F797F": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CronAllowEventRuleCdkschedulerStackLambdaForSchedular8A8F797FAD4B4731"
+          }
+        ],
+        "/CdkschedulerStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdkschedulerStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/CdkschedulerStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdkschedulerStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdkschedulerStack"
+    }
+  }
+}
