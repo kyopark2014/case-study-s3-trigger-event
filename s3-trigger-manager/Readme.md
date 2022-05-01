@@ -41,7 +41,7 @@ S3 trigger시 발생한 이벤트는 아래와 같이 bucket name과 key로 구�
     console.log('eventInfo: %j', eventInfo);
 ```
 
-Event를 관리하기 위하여 ID로 UUID를 사용합니다. event 생성시 "event_status"를 create로 하는데, 추후 DynamoDB를 이용한 status 관리시 다양한 status로 관리 할 수도 있습니다. 
+Event를 관리하기 위하여 ID로 UUID를 사용합니다. event 생성시 "event_status"를 create로 하는데, 추후 DynamoDB를 이용한 status 관리시 다양한 status로 관리 할 수 있습니다. 
 
 ```java
     const date = new Date();        
