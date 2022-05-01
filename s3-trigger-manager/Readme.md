@@ -2,7 +2,7 @@
 
 S3 Trigger Event를 DyanmoDB로 저장 후에 Manager를 통해 관리하는 케이스에 대한 Architecture는 아래와 같습니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/166144380-c4d0831e-e455-406e-80c2-039c69165ff8.png)
+![image](https://user-images.githubusercontent.com/52392004/166154215-3d23a906-f1df-4df6-893c-4aa0a8f0b75f.png)
 
 
 ## DynamoDB table 구성
