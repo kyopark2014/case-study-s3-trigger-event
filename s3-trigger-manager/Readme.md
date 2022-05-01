@@ -60,7 +60,7 @@ Event를 관리하기 위하여 ID로 UUID를 사용합니다. event 생성시 "
     };
 ```
 
-## CDK 
+## CDK를 이용한 Infrastructure 설치 및 삭제 
 
 생성하기
 
