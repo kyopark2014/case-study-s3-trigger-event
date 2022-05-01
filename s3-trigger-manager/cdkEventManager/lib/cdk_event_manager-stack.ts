@@ -7,15 +7,8 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
-import * as kinesisstream from 'aws-cdk-lib/aws-kinesis';
-import * as kinesisfirehose from 'aws-cdk-lib/aws-kinesisfirehose';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources';
-import * as cfn from 'aws-cdk-lib/aws-cloudformation';
-import * as logs from 'aws-cdk-lib/aws-logs'
-
-import * as glue from 'aws-cdk-lib/aws-glue'
-import * as athena from 'aws-cdk-lib/aws-athena'
 
 import * as sqs from 'aws-cdk-lib/aws-sqs'
 import { S3EventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
@@ -47,16 +40,17 @@ export class CdkEventManagerStack extends Stack {
 
     // DynamoDB
     const tableName = "dynamodb-s3-event";
+    const indexName = "time-index";
     const dataTable = new dynamodb.Table(this, 'dynamodb-s3-event', {
       tableName: tableName,
-        partitionKey: { name: 'Id', type: dynamodb.AttributeType.STRING },
-        sortKey: { name: 'Timestamp', type: dynamodb.AttributeType.STRING },
+        partitionKey: { name: 'event_id', type: dynamodb.AttributeType.STRING },
+        sortKey: { name: 'event_timestamp', type: dynamodb.AttributeType.STRING },
         billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
         removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
     dataTable.addGlobalSecondaryIndex({ // GSI
-      indexName: 'time-index',
-      partitionKey: { name: 'Timestamp', type: dynamodb.AttributeType.STRING },
+      indexName: indexName,
+      partitionKey: { name: 'event_timestamp', type: dynamodb.AttributeType.STRING },
     });
 
     // SQS - Event
@@ -74,8 +68,7 @@ export class CdkEventManagerStack extends Stack {
       handler: "index.handler", 
       timeout: cdk.Duration.seconds(3),
       environment: {
-        // sqsUrl: queueforS3.queueUrl,
-        tableName: "tableName",
+        tableName: tableName,
       }
     }); 
     new cdk.CfnOutput(this, 'ArnOfLambdaForS3Trigger', {
@@ -99,13 +92,13 @@ export class CdkEventManagerStack extends Stack {
       timeout: cdk.Duration.seconds(30),
       environment: {
         tableName: tableName,
-        sqsDstUrl: queueforEvent.queueUrl,
+        indexName: indexName,
+        sqsUrl: queueforEvent.queueUrl,
         capacity: '100' // the capable capacity per operation by the scheduler 
       }
     }); 
     // grant permissions
-    s3Bucket.grantRead(lambdaS3Trigger);
-    dataTable.grantReadWriteData(lambdaS3Trigger);
+    dataTable.grantReadWriteData(lambdaSchedular);
     queueforEvent.grantSendMessages(lambdaSchedular);
     // check functional Arn
     new cdk.CfnOutput(this, 'ArnOfLambdaForSchedular', {
