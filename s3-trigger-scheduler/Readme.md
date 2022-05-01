@@ -8,22 +8,6 @@
 
 ![image](https://user-images.githubusercontent.com/52392004/165916282-d38b28dc-c8c4-4dfd-bfa7-a4f471e956b7.png)
 
-## CDK 
-
-생성하기
-
-```c
-$ cdk synth
-
-$ cdk deploy
-````
-
-삭제하기 
-
-```c
-$ cdk destory
-```
-
 
 ## Scheduler
 
@@ -133,4 +117,21 @@ Srouce SQS로 부터 capacity 만큼 event를 불러온 후에 순차적으로 S
             console.log('No more new message');
             break;
         }
+```
+
+
+## CDK를 이용한 Infrastructure 설치 및 삭제
+
+생성하기
+
+```c
+$ cdk synth
+
+$ cdk deploy
+````
+
+삭제하기 
+
+```c
+$ cdk destory
 ```
