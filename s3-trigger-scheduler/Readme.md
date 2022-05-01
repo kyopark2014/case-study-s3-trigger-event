@@ -1,10 +1,10 @@
-# S3 Trigger Event Schedular
+# S3 Trigger Event Scheduler
 
-여기서는 S3 Trigger Event를 처리하기 위한 Schedular 설계에 집중하여 설명합니다. 
+여기서는 S3 Trigger Event를 처리하기 위한 Scheduler 설계에 집중하여 설명합니다. 
 
 ## Basic Architecture
 
-여기서 구현하려는 Archiecture는 아래와 같이, Amazon S3, Amazon SQS와 Amazon EventBridge로 구성됩니다. 여기서 StepFunction은 Schedular와 관계없는 Load에 관계되므로, 편의상 log로 대체합니다. 
+여기서 구현하려는 Archiecture는 아래와 같이, Amazon S3, Amazon SQS와 Amazon EventBridge로 구성됩니다. 여기서 StepFunction은 Scheduler와 관계없는 Load에 관계되므로, 편의상 log로 대체합니다. 
 
 ![image](https://user-images.githubusercontent.com/52392004/165916282-d38b28dc-c8c4-4dfd-bfa7-a4f471e956b7.png)
 
@@ -83,7 +83,7 @@ Scheduler가 SQS for S3로 부터 메시지 요청시 받은 메시지의 예는
 
 ## Event Scheduler
 
-EventBridge를 통해 Rule을 등록하면 일정 주기로 Lambda 함수를 호출 할 수 있습니다. 여기서는 EventBridge를 이용해 일정주기(1분 단위)로 cron job 형태로 [Lambda for event](https://github.com/kyopark2014/case-study-s3-trigger-event/blob/main/s3-trigger-schedular/cdkscheduler/repositories/lambda-for-event/index.js)를 실행시킵니다. 여기서는 아래처럼 SQS에 ReceiveMessage를 요청해서, 10개 단위로 event를 가져옵니다. 이것을 반복하면 capacity 만큼 event를 처리할 수 있으므로, 일정 주기별로 scheduling을 할 수 있습니다. 
+EventBridge를 통해 Rule을 등록하면 일정 주기로 Lambda 함수를 호출 할 수 있습니다. 여기서는 EventBridge를 이용해 일정주기(1분 단위)로 cron job 형태로 [Lambda for event](https://github.com/kyopark2014/case-study-s3-trigger-event/blob/main/s3-trigger-scheduler/cdkscheduler/repositories/lambda-for-event/index.js)를 실행시킵니다. 여기서는 아래처럼 SQS에 ReceiveMessage를 요청해서, 10개 단위로 event를 가져옵니다. 이것을 반복하면 capacity 만큼 event를 처리할 수 있으므로, 일정 주기별로 scheduling을 할 수 있습니다. 
 
 Srouce SQS로 부터 capacity 만큼 event를 불러온 후에 순차적으로 Step Functions 같은 방법으로 처리하기 위해 다른 Destination SQS에 아래와 같이 Push 합니다.
 
