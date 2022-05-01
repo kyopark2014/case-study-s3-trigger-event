@@ -36,7 +36,7 @@
 
 ![image](https://user-images.githubusercontent.com/52392004/165837257-69cc32c7-22b8-4846-9445-62e0f93a6678.png)
 
-EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해야 하는 경우에는 아래와 같은 방법으로 변경도 가능합니다. 아래 방법에 대한 [셈플 코드](https://github.com/kyopark2014/case-study-s3-trigger-event/tree/main/s3-trigger-scheduler)를 참고 바랍니다.
+EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해야 하는 경우에는 아래와 같은 방법으로 변경도 가능합니다. 상세한 설게는 [S3 Trigger Event Scheduler](https://github.com/kyopark2014/case-study-s3-trigger-event/tree/main/s3-trigger-scheduler)를 참고하십시요. 
 
 ![image](https://user-images.githubusercontent.com/52392004/165844568-929eb7f1-8147-4b05-85f6-3ae161afda7d.png)
 
@@ -49,9 +49,9 @@ Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 �
 
 장애등의 어떤 비정상 상황에서 SQS에 저장된 message가 삭제되어 버린 경우에도 정상적으로 데이터를 처리하고자 한다면 아래와 같이 DynamoDB와 같은 데이터베이스를 사용하여 모든 event를 logging 한 후, 순차적으로 처리하는 방법으로 접근 할 수 있을것으로 보입니다. 아래 그림에서는 S3의 object 생성 trigger 발생시 Lambda(S3)가 SQS에 event message를 push 하면서, DynamoDB에도 같은 이벤트를 put 합니다. 이때, 중복방지를 위해 UUID같은 event에 대한 unique한 ID를 생성하여 사용할 수 있습니다. SQS에 저장된 messages들은 순차적으로 Lambda(schedular)에 의해서 처리 되는데, SQS의 메시지를 삭제할때 마찬가지로 DynamoDB의 event message도 삭제합니다. (UUID 이용) 
 
-만약, 비정상적인 상황으로 인해 SQS의 메시지가 유실되었다고 하더라도, DynamoDB와 S3에는 데이터가 남아 있으므로, EventBridge를 통해 정기적으로 cron job을 생성하여, Lambda(check)가 DynamoDB에 전달되지 않은 오래된 event message가 있다면, 다시 SQS로 전송합니다. SQS에 들어온 미처리 데이터는 신규 메시지처럼 처리되고, 처리된 이후에 DynamoDB에서도 삭제가 가능합니다.  
+만약, 비정상적인 상황으로 인해 SQS의 메시지가 유실되었다고 하더라도, DynamoDB와 S3에는 데이터가 남아 있으므로, EventBridge를 통해 정기적으로 cron job을 생성하여, Lambda(check)가 DynamoDB에 전달되지 않은 오래된 event message가 있다면, 다시 SQS로 전송합니다. SQS에 들어온 미처리 데이터는 신규 메시지처럼 처리되고, 처리된 이후에 DynamoDB에서도 삭제가 가능합니다. 상세한 설계는 [S3 Trigger Event Manager](https://github.com/kyopark2014/case-study-s3-trigger-event/tree/main/s3-trigger-manager)를 참고 하십시요.
 
-![image](https://user-images.githubusercontent.com/52392004/165841203-bd871114-c554-4b6a-ab46-c8f43b081a5c.png)
+![image](https://user-images.githubusercontent.com/52392004/166144380-c4d0831e-e455-406e-80c2-039c69165ff8.png)
 
 
 #### Event Manager 
