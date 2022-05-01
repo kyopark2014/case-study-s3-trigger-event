@@ -59,8 +59,7 @@ Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 �
 
 아래에서는 Amazon S3에서 생성된 신규 object event를 SQS가 아닌 DynamoDB에 저장후에, EventBridge가 생성한 Cron job으로 Lambda(schedular)가 DynamoDB를 조회한 후, SQS에 push 하는 방법입니다. 상세한 설계는 [S3 Trigger Event Manager](https://github.com/kyopark2014/case-study-s3-trigger-event/tree/main/s3-trigger-manager)를 참고 하십시요.
 
-![image](https://user-images.githubusercontent.com/52392004/166144380-c4d0831e-e455-406e-80c2-039c69165ff8.png)
-
+![image](https://user-images.githubusercontent.com/52392004/166154215-3d23a906-f1df-4df6-893c-4aa0a8f0b75f.png)
 
 ## 해결방안: Amazon Glue 
 
