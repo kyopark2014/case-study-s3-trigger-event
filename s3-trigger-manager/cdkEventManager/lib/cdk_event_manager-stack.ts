@@ -50,7 +50,8 @@ export class CdkEventManagerStack extends Stack {
     });
     dataTable.addGlobalSecondaryIndex({ // GSI
       indexName: indexName,
-      partitionKey: { name: 'event_timestamp', type: dynamodb.AttributeType.STRING },
+      partitionKey: { name: 'event_status', type: dynamodb.AttributeType.STRING },
+      sortKey: { name: 'event_timestamp', type: dynamodb.AttributeType.STRING },
     });
 
     // SQS - Event

@@ -266,6 +266,10 @@
                       {
                         "attributeName": "event_timestamp",
                         "attributeType": "S"
+                      },
+                      {
+                        "attributeName": "event_status",
+                        "attributeType": "S"
                       }
                     ],
                     "billingMode": "PAY_PER_REQUEST",
@@ -274,8 +278,12 @@
                         "indexName": "time-index",
                         "keySchema": [
                           {
-                            "attributeName": "event_timestamp",
+                            "attributeName": "event_status",
                             "keyType": "HASH"
+                          },
+                          {
+                            "attributeName": "event_timestamp",
+                            "keyType": "RANGE"
                           }
                         ],
                         "projection": {
@@ -527,7 +535,7 @@
                       "s3Bucket": {
                         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
                       },
-                      "s3Key": "39ae87e05db36e71123191e8955a5e63976d7867c04fbab0831e6c69b5307c1b.zip"
+                      "s3Key": "eba1e26666eaa4d6fb90cedda974d1298c66a1d99c2c4c2cb95e8a2359a9ff27.zip"
                     },
                     "role": {
                       "Fn::GetAtt": [
@@ -847,7 +855,7 @@
                       "s3Bucket": {
                         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
                       },
-                      "s3Key": "0c273def1fd1e6a0aa772e5d7e479d0ff4d83a2b09ca9109059a263a1c092e20.zip"
+                      "s3Key": "8a4e5e7e44fed7048c32802b3ede9ce9aa691cad718f3aea52aa9e90fb6d0d84.zip"
                     },
                     "role": {
                       "Fn::GetAtt": [

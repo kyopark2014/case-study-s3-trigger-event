@@ -11,33 +11,14 @@ exports.handler = async (event, context) => {
     console.log('## ENVIRONMENT VARIABLES: ' + JSON.stringify(process.env))
     console.log('## EVENT: ' + JSON.stringify(event))
 
-    const scanParams = {
-        TableName: tableName,
-        Limit: capacity,
-    };
-
-    var dynamoQuery; 
-    let count;
-    try {
-        dynamoQuery = await dynamo.scan(scanParams).promise();
-
-        console.log('queryDynamo: '+JSON.stringify(dynamoQuery));
-        console.log('queryDynamo: '+dynamoQuery.Count);   
-        count = dynamoQuery.Count;
-    } catch (error) {
-      console.log(error);
-      return;
-    } 
-
-/*    const queryParams = {
+    const queryParams = {
         TableName: tableName,
         IndexName: indexName,    
-        
-        KeyConditionExpression: "event_timestamp = :event_timestamp",
+        KeyConditionExpression: "event_status = :event_status",
         ExpressionAttributeValues: {
-            ":event_timestamp": 1
+            ":event_status": "created"
         },
-        ScanIndexForward: false
+        ScanIndexForward: true   // true = ascending, false = descending
     };
 
     var dynamoQuery; 
@@ -51,7 +32,7 @@ exports.handler = async (event, context) => {
     } catch (error) {
       console.log(error);
       return;
-    } */
+    } 
 
     if(count == 0) {  // remain event is not exist
         const response = {
