@@ -70,4 +70,10 @@ Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 �
 DLQ(Dead-letter queue)를 enable하고 "Maximum receives"를 설정하면, SQS에 있는 메시지를 consumer가 가져가서 visibility timeout(기본값: 30s)안에 consumer가 메시지가를 삭제하지 않으면 "Maximum receives"만큼 재시도 한 후에 DLQ에 실패한 메시지를 저장 할 수 있습니다. 이 DLQ로 저장된 메시지를 2021년 12월에 출시된 [Introducing Amazon Simple Queue Service dead-letter queue redrive to source queues](https://aws.amazon.com/ko/blogs/compute/introducing-amazon-simple-queue-service-dead-letter-queue-redrive-to-source-queues/)를 이용하여 redrive 할 수 
 있습니다.
 
+1) 아래와 같이 DQL에서 [Start DLQ retrieve]를 선택합니다. 
+
+![noname](https://user-images.githubusercontent.com/52392004/169413707-0ede9e14-db6f-4da1-9f2e-b4c713ea2006.png)
+
+
+2) DLQ에 있는 메시지룰 원래 Queue로 다시 보내는 시점을, Redrive configuration의 [Velocity control settings]에서 설정을 할 수 있습니다. "System optimized"를 하면, 즉시 다시 시도하고, "Custom max velocity"를 하면 
 
