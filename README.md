@@ -16,7 +16,7 @@
  
  - 그리고, 이런한 [inflight 메시지가 Standard 일때 120,000개, FIFO일때는 20,000개가 넘으면, SQS가 SQSOverLimit error를 발생](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-queues.html)시켜, 새로운 메시지를 저장하지 못하게 되므로, 이런 상태에서 새로운 event가 계속 S3로부터 trigger되어 들어오면 유실 될 수 있을 것으로 보입니다. 
  
-## 해결 방안: S3 Trigger Event Schedular based on SQS
+## 해결 방안 1 : S3 Trigger Event Schedular based on SQS
 
 #### SQS 기본 동작 
 
@@ -43,7 +43,7 @@ EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해
 
 
 
-## 해결방안: S3 Trigger Event Manager based on DynaomoDB
+## 해결방안 2 : S3 Trigger Event Manager based on DynaomoDB
 
 Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 한다면 아래와 같은 구조도 가능합니다. 
 
@@ -61,6 +61,13 @@ Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 �
 
 ![image](https://user-images.githubusercontent.com/52392004/166154215-3d23a906-f1df-4df6-893c-4aa0a8f0b75f.png)
 
-## 해결방안: Amazon Glue 
+## 해결방안 3 : Amazon Glue 
 
 [Amazon Glue를 이용하여 S3 trigger event를 처리하는 방법](https://catalog.us-east-1.prod.workshops.aws/workshops/ee59d21b-4cb8-4b3d-a629-24537cf37bb5/en-US/lab1/event-notification-crawler)이 있습니다. 이 방법은 기존 step functions을 glue를 통해 해결하여야 합니다. 
+
+## 해결방안 4 : DLQ Redrive
+
+메시지를 
+
+
+[Introducing Amazon Simple Queue Service dead-letter queue redrive to source queues](https://aws.amazon.com/ko/blogs/compute/introducing-amazon-simple-queue-service-dead-letter-queue-redrive-to-source-queues/)
