@@ -67,23 +67,21 @@ Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 �
 
 ## 해결방안 4 : DLQ Redrive
 
-DLQ(Dead-letter queue)를 enable하고 "Maximum receives"를 설정하면, SQS에 있는 메시지를 consumer가 가져가서 visibility timeout(기본값: 30s)안에 consumer가 메시지가를 삭제하지 않으면 "Maximum receives"만큼 재시도 한 후에 DLQ에 실패한 메시지를 저장 할 수 있습니다. 이 DLQ로 저장된 메시지를 2021년 12월에 출시된 [Introducing Amazon Simple Queue Service dead-letter queue redrive to source queues](https://aws.amazon.com/ko/blogs/compute/introducing-amazon-simple-queue-service-dead-letter-queue-redrive-to-source-queues/)를 이용하여 redrive 할 수 있습니다. 아래와 같이 
-DLQ(Dead-letter queue)를 enable하고 "Maximum receives"를 설정하면, SQS에 있는 메시지를 consumer가 가져가서 visibility timeout(기본값: 30s)안에 consumer가 메시지가를 삭제하지 않으면 "Maximum receives"만큼 재시도 한 후에 DLQ에 실패한 메시지를 저장 할 수 있습니다. 이 DLQ로 저장된 메시지를 2021년 12월에 출시된 [Introducing Amazon Simple Queue Service dead-letter queue redrive to source queues](https://aws.amazon.com/ko/blogs/compute/introducing-amazon-simple-queue-service-dead-letter-queue-redrive-to-source-queues/)를 이용하여 redrive 할 수 
+DLQ(Dead-letter queue)를 enable하고 "Maximum receives"를 설정하면, SQS에 있는 메시지를 consumer가 가져가서 visibility timeout(기본값: 30s)안에 consumer가 메시지가를 삭제하지 않으면 "Maximum receives"만큼 재시도 한 후에 DLQ에 실패한 메시지를 저장 할 수 있습니다. 이 DLQ로 저장된 메시지를 2021년 12월에 출시된 [Introducing Amazon Simple Queue Service dead-letter queue redrive to source queues](https://aws.amazon.com/ko/blogs/compute/introducing-amazon-simple-queue-service-dead-letter-queue-redrive-to-source-queues/)를 이용하여 redrive 할 수 있습니다. 아래와 같이 DLQ에 저장된 메시지는 전송전이므로 저장되는 메시지의 제한이 없으므로, 실패한 모든 메시지를 저장 할 수 있습니다.
 
 ![noname](https://user-images.githubusercontent.com/52392004/169417091-c15a0ef9-12a8-4299-b7d9-3fb22602ba02.png)
 
-
-1) 아래와 같이 DQL에서 [Start DLQ retrieve]를 선택합니다. 
+Consumer의 문제가 해결되면, 아래와 같이 DQL에서 [Start DLQ retrieve]를 선택해서 재전송 할 수 있습니다.
 
 ![noname](https://user-images.githubusercontent.com/52392004/169413707-0ede9e14-db6f-4da1-9f2e-b4c713ea2006.png)
 
 
-2) DLQ에 있는 메시지룰 원래 Queue로 다시 보내는 속도를, Redrive configuration의 [Velocity control settings]에서 설정을 할 수 있습니다. "System optimized"를 하면, 시스템이 최적화된 속도로 가능한 빨리 다시 시도하고, "Custom max velocity"를 하면 초당 전송되는 숫자를 조정 할 수 있습니다. 아래처럼 1로 설정하면 초당 1개씩 전송하게 됩니다. 
+이때, DLQ에 있는 메시지룰 원래 Queue로 다시 보내는 속도를, Redrive configuration의 [Velocity control settings]에서 설정을 할 수 있습니다. "System optimized"를 하면, 시스템이 최적화된 속도로 가능한 빨리 다시 시도하고, "Custom max velocity"를 하면 초당 전송되는 숫자를 조정 할 수 있습니다. 아래처럼 1로 설정하면 초당 1개씩 전송하게 됩니다. 
 
 ![noname](https://user-images.githubusercontent.com/52392004/169414321-e09046fb-b182-469e-8190-59875a63312e.png)
 
-3) DLQ redrive를 시작하면 아래처럼 원래 Queue로 보내져서 재전송합니다. 
+아래와 같이 DLQ redrive를 시작하면 아래처럼 원래 Queue로 보내져서 재전송합니다. 
 
 ![image](https://user-images.githubusercontent.com/52392004/169414569-f8d3e1c4-7317-43fc-8cf6-5e2777c2bbcd.png)
 
-
+이 방법은 일시적으로 부하가 급증한 경우에 미전송메시지를 재전송할 수 있는 유용한 방법입니다. 
