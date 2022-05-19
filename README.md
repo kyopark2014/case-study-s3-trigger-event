@@ -82,7 +82,7 @@ Consumer의 문제가 해결되면, 아래와 같이 DQL에서 [Start DLQ retrie
 
 ![noname](https://user-images.githubusercontent.com/52392004/169414321-e09046fb-b182-469e-8190-59875a63312e.png)
 
-아래와 같이 DLQ redrive를 시작하면, 저장된 메시지가 원래 Queue로 보내져서 재전송합니다. 
+아래와 같이 DLQ redrive를 시작하면, 저장된 메시지가 원래 Queue로 보내져서 재전송됩니다. 
 
 ![image](https://user-images.githubusercontent.com/52392004/169414569-f8d3e1c4-7317-43fc-8cf6-5e2777c2bbcd.png)
 
