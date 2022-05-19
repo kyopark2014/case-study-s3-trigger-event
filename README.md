@@ -73,7 +73,7 @@ DLQ(Dead-letter queue)를 enable하고 "Maximum receives"를 설정하면, SQS�
 
 ![noname](https://user-images.githubusercontent.com/52392004/169417091-c15a0ef9-12a8-4299-b7d9-3fb22602ba02.png)
 
-Consumer의 문제가 해결되면, 아래와 같이 DQL에서 [Start DLQ retrieve]를 선택해서 재전송 할 수 있습니다.
+Consumer의 문제가 해결되면, 아래와 같이 DLQ에서 [Start DLQ retrieve]를 선택해서 재전송 할 수 있습니다.
 
 ![noname](https://user-images.githubusercontent.com/52392004/169413707-0ede9e14-db6f-4da1-9f2e-b4c713ea2006.png)
 
