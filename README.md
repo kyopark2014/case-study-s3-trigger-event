@@ -78,7 +78,7 @@ Consumer의 문제가 해결되면, 아래와 같이 DQL에서 [Start DLQ retrie
 ![noname](https://user-images.githubusercontent.com/52392004/169413707-0ede9e14-db6f-4da1-9f2e-b4c713ea2006.png)
 
 
-이때, DLQ에 있는 메시지룰 원래 Queue로 다시 보내는 속도를, Redrive configuration의 [Velocity control settings]에서 설정을 할 수 있습니다. "System optimized"를 하면, 시스템이 최적화된 속도로 가능한 빨리 다시 시도하고, "Custom max velocity"를 하면 초당 전송되는 숫자를 조정 할 수 있습니다. 아래처럼 1로 설정하면 초당 1개씩 전송하게 됩니다. 
+이때, DLQ에 있는 메시지를 원래 Queue로 다시 보내는 속도를, Redrive configuration의 [Velocity control settings]에서 설정을 할 수 있습니다. "System optimized"를 하면, 시스템이 최적화된 속도로 가능한 빨리 다시 시도하고, "Custom max velocity"를 하면 초당 전송되는 숫자를 조정 할 수 있습니다. 아래처럼 1로 설정하면 초당 1개씩 전송하게 됩니다. 
 
 ![noname](https://user-images.githubusercontent.com/52392004/169414321-e09046fb-b182-469e-8190-59875a63312e.png)
 
