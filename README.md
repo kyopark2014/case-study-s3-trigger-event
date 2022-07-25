@@ -87,3 +87,8 @@ Consumer의 문제가 해결되면, 아래와 같이 DLQ에서 [Start DLQ retrie
 ![image](https://user-images.githubusercontent.com/52392004/169414569-f8d3e1c4-7317-43fc-8cf6-5e2777c2bbcd.png)
 
 DLQ Redrive는 일시적으로 부하가 급증한 경우에 전송에 실패한 메시지를 재전송할 수 있는 유용한 방법입니다. 
+
+
+## Reference
+
+[How to build a fully managed scheduling mechanism for updates on Amazon S3 data lakes](https://medium.com/paul-zhao-projects/how-to-build-a-fully-managed-scheduling-mechanism-for-updates-on-amazon-s3-data-lakes-5eb192866a66)
