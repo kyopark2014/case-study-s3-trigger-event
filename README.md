@@ -43,7 +43,7 @@ EventBridge event로 만든 Cron job에서 다수의 event messages을 처리해
 
 
 
-## 해결방안 2 : S3 Trigger Event Manager based on DynaomoDB
+## 해결방안 2 : S3 Trigger Event Manager based on DynamoDB
 
 Rare 하지만 비정상 케이스에서도 message 전송을 보장하여야 한다면 아래와 같은 구조도 가능합니다. 
 
